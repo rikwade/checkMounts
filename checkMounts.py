@@ -21,21 +21,20 @@ myMounts = {
 # A variable for the network share prefix you wish to use. This
 # should be a CIFs, AFP etc. share for a server on your network
 # This is an example and should be changed
-myNASprefix = "afp://guest@diskstation.local/";
+myNASprefix = "afp://guest@diskstation.local/"
 
 # Check the current mounts to see if the shares are mounted
 for line in subprocess.check_output(['mount']).split('\n'):
     parts = line.split(' ')
     if len(parts) > 2:
         if parts[2] in myMounts:
-            myMounts[parts[2]]=True;
+            myMounts[parts[2]] = True
 
 # Go through the dictionary, see what is still False and re-mount it
 # We use 'open' here because it's a simple way of re-mounting in OS X
 for key in myMounts:
     if myMounts[key] is False:
-        path = key.split('/');
-        share = myNASprefix+path[2];
-        subprocess.call(['open', share]);
+        path = key.split('/')
+        share = myNASprefix+path[2]
+        subprocess.call(['open', share])
         print "Re-mounted: "+share
-
